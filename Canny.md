@@ -60,7 +60,6 @@ int main()
 	waitKey(0);
 	system("pause");
 	return 0;
-
 }
 					    
 ![Снимок экрана 2021-09-21 124340](https://user-images.githubusercontent.com/67784048/134153469-b91063eb-366b-4b97-9368-9d76b3a816da.png)                         
