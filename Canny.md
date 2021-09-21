@@ -1,14 +1,23 @@
+
 #include "opencv2/highgui/highgui.hpp"
+
 #include "opencv2/imgproc/imgproc.hpp"
+
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
+
+	#include <stdio.h>
+
+	#include <stdlib.h>
 
 	using namespace cv;
-using namespace std;
-Mat img;
-int main()
-{
+
+	using namespace std;
+
+	Mat img;
+
+	int main()
+
+	{
 	setlocale(LC_ALL, "Russian");
 	char filename[80]; // ash.jpg
 	cout << "Введите имя файла, в которой хотите внести изменения, и нажимте Enter" << endl;
