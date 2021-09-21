@@ -1,4 +1,3 @@
-
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
@@ -15,9 +14,7 @@ int main()
 	cin.getline(filename, 80);
 	cout << "Открыть файл";
 	cout << filename << endl;
-	
 	Mat img = imread(filename, 1);
-	
 	namedWindow("source_window", WINDOW_AUTOSIZE);
 	imshow("source_window", img);
 	Mat src_gray, canny_output;
