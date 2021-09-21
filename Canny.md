@@ -70,6 +70,7 @@ int main()
 	return 0;
 
 }
+					    
 ![Снимок экрана 2021-09-21 124340](https://user-images.githubusercontent.com/67784048/134153469-b91063eb-366b-4b97-9368-9d76b3a816da.png)                         
 ![Снимок экрана 2021-09-21 124328](https://user-images.githubusercontent.com/67784048/134153551-46720206-e4b8-495f-a575-f9983cba3a37.png)
 ![Снимок экрана 2021-09-21 125815](https://user-images.githubusercontent.com/67784048/134153727-7d84bca7-441f-42e1-9081-6738f92745bc.png)
