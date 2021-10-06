@@ -18,22 +18,40 @@
 	int main()
 
 	{
-	setlocale(LC_ALL, "Russian");
+	//Запрос от пользователя какой файл ему требуется открыть
+	
+	setlocale(LC_ALL, "Russian"); 
+	
+	//string filename; //строчка с названием перменной 
+	//cout << "Имя файла "; //вывод значения <<
+	//cin >> filename;  // ввод значения >>
+	//cout << "Ввели файл "<<filename<<endl; //endl текст будет выведен на след. строке 
+	
 	char filename[80]; // ash.jpg
 	cout << "Введите имя файла, в которой хотите внести изменения, и нажимте Enter" << endl;
 	cin.getline(filename, 80);
 	cout << "Открыть файл";
 	cout << filename << endl;
-	Mat img = imread(filename, 1);
-	namedWindow("source_window", WINDOW_AUTOSIZE);
-	imshow("source_window", img);
-	Mat src_gray, canny_output;
-	cvtColor(img, src_gray, COLOR_RGB2GRAY);
-	blur(src_gray, src_gray, Size(3, 3));
-	double otsu_thresh_val = threshold(src_gray, img, 0, 255, THRESH_BINARY | THRESH_OTSU);
+	
+	//Блок загрузки изображения, Оператор Canny
+	
+	Mat img = imread(filename, 1); //создает матрицу. //imread -  считывает изображение из файла, заданного , выводя формат файла из его содержимого.
+	
+	namedWindow("source_window", WINDOW_AUTOSIZE); // название окна, авторазмер
+	imshow("source_window", img); // отображает изображение в градациях серого на рисунке. использует диапазон отображения по умолчанию для типа данных изображения и оптимизирует свойства рисунка, осей и объекта изображения для отображения изображения
+	
+	
+	Mat src_gray, canny_output; //Создание матрицы с названием src_gray и canny_output
+	
+	cvtColor(img, src_gray, COLOR_RGB2GRAY); //  cvtColor конвертирует изображения из одного цветового пространства в другое (в монохромное)
+	
+	blur(src_gray, src_gray, Size(3, 3)); // размытие
+	double otsu_thresh_val = threshold(src_gray, img, 0, 255, THRESH_BINARY | THRESH_OTSU); // нижний и верхний порог, нижний отвечает за шумы изображения, если задать много верхнего, то будет просто черное изображение
+	
 	double high_thresh_val = otsu_thresh_val, lower_thresh_val = otsu_thresh_val * 0.5;
 	cout << otsu_thresh_val;
-	Canny(src_gray, canny_output, lower_thresh_val, high_thresh_val, 3);
+	Canny(src_gray, canny_output, lower_thresh_val, high_thresh_val, 3); // оператор обнаружения границ изображения
+	
 	namedWindow("source_grey_window", WINDOW_AUTOSIZE);
 	imshow("source_grey_window", canny_output);
 	imwrite("canny_output.jpg", canny_output);
