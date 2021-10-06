@@ -61,12 +61,14 @@
 	
 	vector<vector<Point>> contours; // генератор случайных чисел
 	
-	vector<Vec4i> hierarchy; // вектор
+	vector<Vec4i> hierarchy; // Vec4i-это структура для представления вектора с 4 измерениями, каждое значение int. линии-выходной вектор линий.
 	
 	findContours(canny_output, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0)); // нахождение контуров ,RETR_EXTERNAL - удаляет внутренние контуры  ,CHAIN_APPROX_SIMPLE - нужен для экономии памяти: если линия, то хранит только точки начала и конца.
 	
 	
-	vector<Moments> mu(contours.size()); //contours.size - кол-во контуров, проходим по всем контурам и определяем центр массы с помощью moments
+	vector<Moments> mu(contours.size()); // vector<Moments>-это суммарная характеристика пятна, представляющая собой сумму всех точек этого пятна.
+	
+	//contours.size - кол-во контуров, проходим по всем контурам и определяем центр массы с помощью moments
 	
 	
 	for (int i = 0; i < contours.size(); i++)
