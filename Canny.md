@@ -55,15 +55,28 @@
 	namedWindow("source_grey_window", WINDOW_AUTOSIZE);
 	imshow("source_grey_window", canny_output);
 	imwrite("canny_output.jpg", canny_output);
+	
+	// Моменты и центр масс findContours
 	RNG rng(12345);
-	vector<vector<Point>> contours;
-	vector<Vec4i> hierarchy;
-	findContours(canny_output, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0));
-	vector<Moments> mu(contours.size());
+	
+	vector<vector<Point>> contours; // генератор случайных чисел
+	
+	vector<Vec4i> hierarchy; // вектор
+	
+	findContours(canny_output, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0)); // нахождение контуров ,RETR_EXTERNAL - удаляет внутренние контуры  ,CHAIN_APPROX_SIMPLE - нужен для экономии памяти: если линия, то хранит только точки начала и конца.
+	
+	
+	vector<Moments> mu(contours.size()); //contours.size - кол-во контуров, проходим по всем контурам и определяем центр массы с помощью moments
+	
+	
 	for (int i = 0; i < contours.size(); i++)
 	{
 		mu[i] = moments(contours[i], false);
 	}
+	
+	//зная 0,1,2 моменты, можно определить координаты центр масс по x and y
+	
+	
 	vector<Point2f> mc(contours.size());
 	for (int i = 0; i < contours.size(); i++)
 	{
@@ -73,12 +86,17 @@
 	{
 		printf("Контур № %d: центр масс - x = %.2f y = %.2f; длина - %.2f\n", i, mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00, arcLength(contours[i],true));
 	}
-	Mat drawing = Mat::zeros(canny_output.size(), CV_8UC3); 
+	
+	// Рисование контуров
+	
+	Mat drawing = Mat::zeros(canny_output.size(), CV_8UC3);  // CV_8UC3 изображение без знака с 3 каналами
 	for (int i = 0; i < contours.size(); i++)
 	{
-		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
-		drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, Point());
-		circle(drawing, mc[i], 4, color, -1, 5, 0);
+		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255)); //Тип Scalar широко используется в OpenCV для передачи значений пикселей, цвет
+		
+		drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, Point()); //Полученные с помощью функции findContours контуры хорошо бы каким-то образом нарисовать в кадре. Машине это не нужно, зато нам это поможет лучше понять как выглядят найденные алгоритмом контуры. Поможет в этом ещё одна полезная функция — drawContours.
+		
+		circle(drawing, mc[i], 4, color, -1, 5, 0); // описывает окружность вокруг центра массы 
 	}
 	namedWindow("Контуры", WINDOW_AUTOSIZE);
 	imshow("Контуры", drawing);
